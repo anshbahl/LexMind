@@ -1,6 +1,6 @@
 # LexMind (लेक्समाइंड)
 **AI-Integrated Legal Case Management System with Personalized Retrieval-Augmented Drafting & Precedent Intelligence**  
-*Tailored for Indian Legal Practice (Individual Advocates & Boutique Law Chambers)*
+*Tailored for Indian Legal Practices (Individual Advocates & Boutique Law Chambers)*
 
 ---
 
