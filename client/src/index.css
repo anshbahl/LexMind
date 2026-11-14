@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #FAF9F6;
+    color: #1E293B;
+  }
+}
+
+/* TipTap Legal Rich Text Editor Custom Styling */
+.tiptap-legal-editor {
+  font-family: 'Newsreader', 'Lora', Georgia, serif;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: #1E293B;
+  min-height: 650px;
+  outline: none;
+}
+
+.tiptap-legal-editor p {
+  margin-bottom: 1.25rem;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.tiptap-legal-editor h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: #132238;
+}
+
+.tiptap-legal-editor h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: #132238;
+}
+
+.tiptap-legal-editor h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #233E65;
+}
+
+.tiptap-legal-editor ol {
+  list-style-type: decimal;
+  padding-left: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.tiptap-legal-editor ol li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.tiptap-legal-editor blockquote {
+  border-left: 3px solid #B48A3E;
+  padding-left: 1rem;
+  font-style: italic;
+  margin: 1.25rem 0;
+  color: #475569;
+}
+
+/* Diff formatting */
+.diff-added {
+  background-color: #ECFDF5;
+  color: #065F46;
+  border-bottom: 2px solid #10B981;
+  padding: 0 2px;
+}
+
+.diff-removed {
+  background-color: #FEF2F2;
+  color: #991B1B;
+  text-decoration: line-through;
+  opacity: 0.75;
+  padding: 0 2px;
+}
+
+/* Citation source pill */
+.citation-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: #FDF8EE;
+  color: #946E2B;
+  border: 1px solid #F7ECD4;
+  border-radius: 9999px;
+  padding: 0.125rem 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.citation-pill:hover {
+  background-color: #B48A3E;
+  color: #FFFFFF;
+  border-color: #B48A3E;
+}
+
+/* Custom Scrollbar for tactile legal aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF9F6;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
