@@ -58,13 +58,11 @@ ${brief.hearing_timeline
         {/* Modal Header */}
         <div className="p-4 bg-navy-900 text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded bg-gold-500/20 text-gold-400 flex items-center justify-center">
-              <Sparkles className="w-4 h-4" />
-            </div>
+            <Sparkles className="w-4 h-4 text-gold-400" />
             <div>
-              <h3 className="font-semibold text-sm tracking-wide">2-Minute Chamber Brief (Hearing Prep)</h3>
-              <p className="text-xs text-charcoal-300">
-                Automated synthesis of order sheets, compliances & NDOH strategy
+              <h3 className="font-serif font-bold text-sm tracking-wide">2-Minute Chamber Hearing Brief</h3>
+              <p className="text-[11px] text-charcoal-300">
+                Synthesis of order sheets, compliances & NDOH agenda
               </p>
             </div>
           </div>
@@ -97,17 +95,14 @@ ${brief.hearing_timeline
         </div>
 
         {/* Modal Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-6 space-y-5">
           {loading ? (
-            <div className="py-20 text-center">
-              <div className="w-8 h-8 border-2 border-gold-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-              <p className="text-sm font-medium text-navy-900">Synthesizing Chamber Brief...</p>
-              <p className="text-xs text-charcoal-500 mt-1">
-                Aggregating past order sheets, pending items, and judge coram directives
-              </p>
+            <div className="py-16 text-center">
+              <div className="w-7 h-7 border-2 border-gold-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+              <p className="text-xs font-medium text-navy-900">Synthesizing Chamber Brief...</p>
             </div>
           ) : brief ? (
-            <div className="space-y-6 font-sans">
+            <div className="space-y-5 font-sans">
               {/* Matter Metadata Banner */}
               <div className="p-4 rounded-lg bg-canvas border border-charcoal-200 flex flex-wrap items-center justify-between gap-3">
                 <div>
@@ -121,9 +116,9 @@ ${brief.hearing_timeline
                 <div className="flex items-center gap-2">
                   <CNRBadge cnr={brief.cnr_number} />
                   {brief.next_hearing_date && (
-                    <div className="px-2.5 py-1 rounded bg-amber-50 text-amber-800 border border-amber-200 text-xs font-semibold inline-flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5 text-amber-600" />
-                      <span>NDOH: {new Date(brief.next_hearing_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                    <div className="px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-200/70 text-xs font-medium inline-flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-amber-700" />
+                      <span>NDOH: {new Date(brief.next_hearing_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
                     </div>
                   )}
                 </div>
@@ -131,27 +126,27 @@ ${brief.hearing_timeline
 
               {/* 1. Last Operative Court Direction */}
               <div>
-                <h5 className="text-xs font-bold uppercase tracking-wider text-charcoal-500 mb-2 flex items-center gap-1.5">
-                  <Scale className="w-4 h-4 text-gold-500" />
-                  Last Operative Court Direction
+                <h5 className="text-xs font-semibold text-charcoal-700 mb-2 flex items-center gap-1.5">
+                  <Scale className="w-4 h-4 text-gold-600" />
+                  <span>Last Operative Court Direction</span>
                 </h5>
-                <div className="p-4 rounded-lg bg-gold-50/50 border border-gold-300 font-serif text-sm leading-relaxed text-charcoal-800">
+                <div className="p-4 rounded-lg bg-gold-50/40 border border-gold-200 font-serif text-xs leading-relaxed text-charcoal-800">
                   {brief.last_operative_court_direction}
                 </div>
               </div>
 
-              {/* 2. Recommended Agenda for NDOH & Pending Deadlines (2-col grid) */}
+              {/* 2. Recommended Agenda for NDOH & Pending Deadlines */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Pending Compliance Deadlines */}
                 <div className="p-4 rounded-lg bg-white border border-charcoal-200">
-                  <h5 className="text-xs font-bold uppercase tracking-wider text-charcoal-500 mb-3 flex items-center gap-1.5">
-                    <CheckSquare className="w-4 h-4 text-emerald-600" />
-                    Pending Compliances / Deadlines
+                  <h5 className="text-xs font-semibold text-charcoal-700 mb-3 flex items-center gap-1.5">
+                    <CheckSquare className="w-4 h-4 text-emerald-700" />
+                    <span>Pending Deadlines / Compliances</span>
                   </h5>
                   <ul className="space-y-2 text-xs text-charcoal-700">
                     {brief.pending_compliance_deadlines.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-1.5 shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -160,14 +155,14 @@ ${brief.hearing_timeline
 
                 {/* Recommended Agenda for NDOH */}
                 <div className="p-4 rounded-lg bg-white border border-charcoal-200">
-                  <h5 className="text-xs font-bold uppercase tracking-wider text-charcoal-500 mb-3 flex items-center gap-1.5">
-                    <Clock className="w-4 h-4 text-navy-700" />
-                    Recommended Agenda for NDOH
+                  <h5 className="text-xs font-semibold text-charcoal-700 mb-3 flex items-center gap-1.5">
+                    <Clock className="w-4 h-4 text-navy-800" />
+                    <span>Recommended Agenda for NDOH</span>
                   </h5>
                   <ul className="space-y-2 text-xs text-charcoal-700">
                     {brief.recommended_agenda_for_ndoh.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-navy-600 mt-1.5 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-navy-700 mt-1.5 shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -175,43 +170,40 @@ ${brief.hearing_timeline
                 </div>
               </div>
 
-              {/* 3. Reverse-Chronological Hearing Timeline */}
+              {/* 3. Hearing History Timeline */}
               <div>
-                <h5 className="text-xs font-bold uppercase tracking-wider text-charcoal-500 mb-3">
-                  Hearing History & Order Sheet Timeline
+                <h5 className="text-xs font-semibold text-charcoal-700 mb-2.5">
+                  Order Sheet History
                 </h5>
-                <div className="space-y-3 relative before:absolute before:inset-0 before:left-3 before:w-0.5 before:bg-charcoal-200">
+                <div className="space-y-2.5">
                   {brief.hearing_timeline.map((hearing, idx) => (
-                    <div key={idx} className="relative pl-8">
-                      <div className="absolute left-1.5 top-1.5 w-3.5 h-3.5 rounded-full bg-white border-2 border-navy-900 shrink-0" />
-                      <div className="p-3.5 rounded-lg bg-canvas border border-charcoal-200">
-                        <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-                          <span className="font-semibold text-navy-900 text-xs">
-                            {hearing.purpose}
-                          </span>
-                          <span className="font-mono text-xs text-charcoal-500">
-                            {new Date(hearing.hearing_date).toLocaleDateString('en-IN', {
-                              day: 'numeric',
-                              month: 'short',
-                              year: 'numeric',
-                            })}
-                          </span>
-                        </div>
-                        {hearing.judge_coram && (
-                          <div className="text-[11px] text-charcoal-500 mb-1.5 italic">
-                            Coram: {hearing.judge_coram}
-                          </div>
-                        )}
-                        <p className="font-serif text-xs text-charcoal-700 leading-relaxed mb-2">
-                          {hearing.order_summary}
-                        </p>
-                        {hearing.next_action_items && (
-                          <div className="text-[11px] bg-white p-2 rounded border border-charcoal-200 text-charcoal-600">
-                            <span className="font-semibold text-navy-800">Action Item: </span>
-                            {hearing.next_action_items}
-                          </div>
-                        )}
+                    <div key={idx} className="p-3.5 rounded-lg bg-canvas border border-charcoal-200">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <span className="font-semibold text-navy-900 text-xs">
+                          {hearing.purpose}
+                        </span>
+                        <span className="text-xs text-charcoal-500 font-medium">
+                          {new Date(hearing.hearing_date).toLocaleDateString('en-IN', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric',
+                          })}
+                        </span>
                       </div>
+                      {hearing.judge_coram && (
+                        <div className="text-[11px] text-charcoal-500 mb-1.5 italic">
+                          Coram: {hearing.judge_coram}
+                        </div>
+                      )}
+                      <p className="font-serif text-xs text-charcoal-700 leading-relaxed mb-2">
+                        {hearing.order_summary}
+                      </p>
+                      {hearing.next_action_items && (
+                        <div className="text-[11px] bg-white p-2 rounded border border-charcoal-200 text-charcoal-600">
+                          <span className="font-semibold text-navy-800">Action: </span>
+                          {hearing.next_action_items}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -221,11 +213,11 @@ ${brief.hearing_timeline
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-canvas border-t border-charcoal-200 flex justify-between items-center text-xs text-charcoal-500">
-          <span>LexMind Grounded Practice Intelligence • Confidentially Prepared</span>
+        <div className="p-3.5 bg-canvas border-t border-charcoal-200 flex justify-between items-center text-xs text-charcoal-500">
+          <span>Confidentially Prepared for Chamber Hearing</span>
           <button
             onClick={onClose}
-            className="px-4 py-1.5 rounded bg-navy-900 hover:bg-navy-800 text-white font-medium transition-colors"
+            className="px-4 py-1.5 rounded-md bg-navy-900 hover:bg-navy-800 text-white font-medium transition-colors"
           >
             Close Brief
           </button>

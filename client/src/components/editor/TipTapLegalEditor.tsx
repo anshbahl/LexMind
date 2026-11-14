@@ -13,16 +13,11 @@ import {
   AlignLeft,
   AlignCenter,
   ListOrdered,
-  Heading1,
-  Heading2,
-  FileCheck,
   Check,
   X,
   Printer,
   Copy,
-  Download,
   Scale,
-  Sparkles,
 } from 'lucide-react';
 import { diffWords } from 'diff';
 import { Case } from '../../types';
@@ -98,7 +93,7 @@ ${caseData.opposing_party.toUpperCase()} ...RESPONDENT / DEFENDANT</p>
     content: initialContent,
     editorProps: {
       attributes: {
-        class: 'tiptap-legal-editor prose prose-slate max-w-none focus:outline-none min-h-[600px] p-8',
+        class: 'tiptap-legal-editor prose prose-slate max-w-none focus:outline-none min-h-[600px] p-10',
       },
     },
     onUpdate: ({ editor }) => {
@@ -131,7 +126,6 @@ ${caseData.opposing_party.toUpperCase()} ...RESPONDENT / DEFENDANT</p>
     onAcceptSuggestedClause();
   };
 
-  // Quick insertion helpers for legal templates
   const insertCauseTitle = () => {
     const template = `
 <h1>IN THE ${caseData.court_forum.toUpperCase()}</h1>
@@ -170,18 +164,18 @@ VERSUS<br/>
     const diff = diffWords('', suggestedClause);
 
     return (
-      <div className="mb-4 p-4 rounded-lg bg-emerald-50/70 border border-emerald-300 shadow-sm animate-in fade-in duration-150">
-        <div className="flex items-center justify-between mb-2">
+      <div className="mb-5 p-4 rounded-lg bg-emerald-50/80 border border-emerald-300 shadow-sm animate-in fade-in duration-150">
+        <div className="flex items-center justify-between mb-2.5">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <h4 className="font-semibold text-xs text-emerald-900 tracking-wide uppercase">
-              AI Co-Counsel Suggestion Ready for Integration
+            <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
+            <h4 className="font-semibold text-xs text-emerald-950 uppercase tracking-wide">
+              Suggested Clause Ready for Integration
             </h4>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={handleInsertSuggestion}
-              className="px-3 py-1 rounded bg-emerald-700 hover:bg-emerald-800 text-white font-medium text-xs inline-flex items-center gap-1.5 shadow-sm transition-colors"
+              className="px-3 py-1 rounded bg-emerald-800 hover:bg-emerald-900 text-white font-medium text-xs inline-flex items-center gap-1.5 shadow-sm transition-colors"
             >
               <Check className="w-3.5 h-3.5" />
               <span>Accept & Insert</span>
@@ -191,7 +185,7 @@ VERSUS<br/>
               className="px-3 py-1 rounded bg-white hover:bg-red-50 text-red-700 border border-red-200 font-medium text-xs inline-flex items-center gap-1.5 transition-colors"
             >
               <X className="w-3.5 h-3.5" />
-              <span>Reject</span>
+              <span>Dismiss</span>
             </button>
           </div>
         </div>
@@ -200,7 +194,7 @@ VERSUS<br/>
           {diff.map((part, index) => (
             <span
               key={index}
-              className={part.added ? 'bg-emerald-100 text-emerald-950 font-medium px-0.5 rounded' : ''}
+              className={part.added ? 'bg-emerald-100/70 text-emerald-950 font-medium px-0.5 rounded' : ''}
             >
               {part.value}
             </span>
@@ -213,24 +207,24 @@ VERSUS<br/>
   return (
     <div className="h-full flex flex-col bg-white overflow-hidden">
       {/* 1. Legal Formatting Toolbar */}
-      <div className="p-2 border-b border-charcoal-200 bg-canvas/80 flex flex-wrap items-center justify-between gap-2">
+      <div className="p-2 px-3 border-b border-charcoal-200 bg-canvas/70 flex flex-wrap items-center justify-between gap-2 shrink-0">
         <div className="flex items-center gap-1">
           {/* Headings */}
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-            className={`p-1.5 rounded hover:bg-charcoal-200 text-xs font-semibold ${
-              editor.isActive('heading', { level: 1 }) ? 'bg-navy-900 text-white' : 'text-charcoal-700'
+            className={`px-2 py-1 rounded text-xs font-semibold transition-colors ${
+              editor.isActive('heading', { level: 1 }) ? 'bg-navy-900 text-white' : 'text-charcoal-700 hover:bg-charcoal-200'
             }`}
-            title="Heading 1 (Court Title)"
+            title="Heading 1"
           >
             H1
           </button>
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-            className={`p-1.5 rounded hover:bg-charcoal-200 text-xs font-semibold ${
-              editor.isActive('heading', { level: 2 }) ? 'bg-navy-900 text-white' : 'text-charcoal-700'
+            className={`px-2 py-1 rounded text-xs font-semibold transition-colors ${
+              editor.isActive('heading', { level: 2 }) ? 'bg-navy-900 text-white' : 'text-charcoal-700 hover:bg-charcoal-200'
             }`}
-            title="Heading 2 (Grounds / Prayer)"
+            title="Heading 2"
           >
             H2
           </button>
@@ -240,8 +234,8 @@ VERSUS<br/>
           {/* Inline Styles */}
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
-            className={`p-1.5 rounded hover:bg-charcoal-200 ${
-              editor.isActive('bold') ? 'bg-navy-900 text-white' : 'text-charcoal-700'
+            className={`p-1.5 rounded transition-colors ${
+              editor.isActive('bold') ? 'bg-navy-900 text-white' : 'text-charcoal-700 hover:bg-charcoal-200'
             }`}
             title="Bold"
           >
@@ -249,19 +243,19 @@ VERSUS<br/>
           </button>
           <button
             onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={`p-1.5 rounded hover:bg-charcoal-200 ${
-              editor.isActive('italic') ? 'bg-navy-900 text-white' : 'text-charcoal-700'
+            className={`p-1.5 rounded transition-colors ${
+              editor.isActive('italic') ? 'bg-navy-900 text-white' : 'text-charcoal-700 hover:bg-charcoal-200'
             }`}
-            title="Italic (Statutory names & citations)"
+            title="Italic"
           >
             <Italic className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleUnderline().run()}
-            className={`p-1.5 rounded hover:bg-charcoal-200 ${
-              editor.isActive('underline') ? 'bg-navy-900 text-white' : 'text-charcoal-700'
+            className={`p-1.5 rounded transition-colors ${
+              editor.isActive('underline') ? 'bg-navy-900 text-white' : 'text-charcoal-700 hover:bg-charcoal-200'
             }`}
-            title="Underline (Court prayer & headings)"
+            title="Underline"
           >
             <UnderlineIcon className="w-3.5 h-3.5" />
           </button>
@@ -271,26 +265,26 @@ VERSUS<br/>
           {/* Alignment */}
           <button
             onClick={() => editor.chain().focus().setTextAlign('justify').run()}
-            className={`p-1.5 rounded hover:bg-charcoal-200 ${
-              editor.isActive({ textAlign: 'justify' }) ? 'bg-navy-900 text-white' : 'text-charcoal-700'
+            className={`p-1.5 rounded transition-colors ${
+              editor.isActive({ textAlign: 'justify' }) ? 'bg-navy-900 text-white' : 'text-charcoal-700 hover:bg-charcoal-200'
             }`}
-            title="Justify (Standard Legal Pleading Alignment)"
+            title="Justified (Standard Court Pleading)"
           >
             <AlignJustify className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={() => editor.chain().focus().setTextAlign('center').run()}
-            className={`p-1.5 rounded hover:bg-charcoal-200 ${
-              editor.isActive({ textAlign: 'center' }) ? 'bg-navy-900 text-white' : 'text-charcoal-700'
+            className={`p-1.5 rounded transition-colors ${
+              editor.isActive({ textAlign: 'center' }) ? 'bg-navy-900 text-white' : 'text-charcoal-700 hover:bg-charcoal-200'
             }`}
-            title="Center (Headings & Captions)"
+            title="Centered Caption"
           >
             <AlignCenter className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={() => editor.chain().focus().setTextAlign('left').run()}
-            className={`p-1.5 rounded hover:bg-charcoal-200 ${
-              editor.isActive({ textAlign: 'left' }) ? 'bg-navy-900 text-white' : 'text-charcoal-700'
+            className={`p-1.5 rounded transition-colors ${
+              editor.isActive({ textAlign: 'left' }) ? 'bg-navy-900 text-white' : 'text-charcoal-700 hover:bg-charcoal-200'
             }`}
             title="Align Left"
           >
@@ -302,8 +296,8 @@ VERSUS<br/>
           {/* Numbered Paragraphs */}
           <button
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
-            className={`p-1.5 rounded hover:bg-charcoal-200 ${
-              editor.isActive('orderedList') ? 'bg-navy-900 text-white' : 'text-charcoal-700'
+            className={`p-1.5 rounded transition-colors ${
+              editor.isActive('orderedList') ? 'bg-navy-900 text-white' : 'text-charcoal-700 hover:bg-charcoal-200'
             }`}
             title="Numbered Legal Paragraphs"
           >
@@ -312,35 +306,33 @@ VERSUS<br/>
 
           <span className="w-px h-4 bg-charcoal-300 mx-1" />
 
-          {/* Quick Legal Templates */}
+          {/* Presets */}
           <button
             onClick={insertCauseTitle}
-            className="px-2 py-1 text-[11px] font-medium text-navy-900 bg-white hover:bg-charcoal-100 rounded border border-charcoal-200"
-            title="Insert Standard Court Header & Cause Title"
+            className="px-2 py-1 text-[11px] font-medium text-charcoal-700 hover:text-navy-900 bg-white hover:bg-charcoal-100 rounded border border-charcoal-200 transition-colors"
           >
             + Cause Title
           </button>
           <button
             onClick={insertVerificationClause}
-            className="px-2 py-1 text-[11px] font-medium text-navy-900 bg-white hover:bg-charcoal-100 rounded border border-charcoal-200"
-            title="Insert Indian Legal Deponent Verification Affidavit"
+            className="px-2 py-1 text-[11px] font-medium text-charcoal-700 hover:text-navy-900 bg-white hover:bg-charcoal-100 rounded border border-charcoal-200 transition-colors"
           >
             + Verification
           </button>
         </div>
 
         {/* Right side document actions */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <button
             onClick={handleCopyAll}
-            className="p-1.5 rounded text-charcoal-600 hover:text-navy-900 hover:bg-charcoal-200 text-xs inline-flex items-center gap-1"
-            title="Copy entire document text"
+            className="p-1.5 rounded text-charcoal-500 hover:text-navy-900 hover:bg-charcoal-200 text-xs inline-flex items-center gap-1 transition-colors"
+            title="Copy entire brief"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
           </button>
           <button
             onClick={handlePrint}
-            className="p-1.5 rounded text-charcoal-600 hover:text-navy-900 hover:bg-charcoal-200 text-xs"
+            className="p-1.5 rounded text-charcoal-500 hover:text-navy-900 hover:bg-charcoal-200 text-xs transition-colors"
             title="Print or Save as PDF"
           >
             <Printer className="w-3.5 h-3.5" />
@@ -351,10 +343,9 @@ VERSUS<br/>
       {/* 2. Editor Canvas Sheet */}
       <div className="flex-1 overflow-y-auto p-6 bg-canvas/30">
         <div className="max-w-3xl mx-auto">
-          {/* Diff preview banner if suggestion exists */}
           {renderDiff()}
 
-          {/* The High-Contrast Editorial Legal Paper Sheet */}
+          {/* Elevated Legal Folio */}
           <div className="bg-white rounded-lg shadow-editor border border-charcoal-200/80 min-h-[750px]">
             <EditorContent editor={editor} />
           </div>
@@ -362,17 +353,17 @@ VERSUS<br/>
       </div>
 
       {/* 3. Editor Status Bar */}
-      <div className="p-2.5 px-4 border-t border-charcoal-200 bg-canvas text-xs text-charcoal-500 flex items-center justify-between">
+      <div className="p-2 px-4 border-t border-charcoal-200 bg-canvas text-xs text-charcoal-500 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <span className="font-mono">{wordCount} words</span>
           <span>•</span>
           <span>~{Math.max(1, Math.ceil(wordCount / 350))} pages</span>
           <span>•</span>
-          <span className="text-navy-900 font-medium">Standard A4 Legal Spacing (1.8x)</span>
+          <span>Legal Spacing (1.8x)</span>
         </div>
         <div className="flex items-center gap-2 text-charcoal-400">
           <Scale className="w-3.5 h-3.5 text-gold-500" />
-          <span className="italic">Newsreader Editorial Typeface</span>
+          <span>Editorial Typeface</span>
         </div>
       </div>
     </div>

@@ -124,3 +124,4 @@ DROP TRIGGER IF EXISTS trg_document_chunks_search_vector ON document_chunks;
 CREATE TRIGGER trg_document_chunks_search_vector
 BEFORE INSERT OR UPDATE OF content ON document_chunks
 FOR EACH ROW EXECUTE FUNCTION document_chunks_search_vector_update();
+

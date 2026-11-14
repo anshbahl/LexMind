@@ -4,7 +4,6 @@ import {
   Briefcase,
   Search,
   Plus,
-  Filter,
   Calendar,
   Sparkles,
   ArrowRight,
@@ -12,7 +11,7 @@ import {
   Clock,
 } from 'lucide-react';
 import { api } from '../services/api';
-import { Case, CaseType, CaseStatus } from '../types';
+import { Case, CaseType } from '../types';
 import { CNRBadge } from '../components/common/CNRBadge';
 import { CaseTypeBadge } from '../components/common/CaseTypeBadge';
 import { ChamberBriefModal } from '../components/common/ChamberBriefModal';
@@ -95,19 +94,19 @@ export const CasesList: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto bg-canvas p-6 space-y-6">
+    <div className="flex-1 overflow-y-auto bg-canvas p-8 space-y-6 max-w-7xl mx-auto w-full">
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-charcoal-200/70">
         <div>
           <h1 className="font-serif font-bold text-2xl text-navy-900">Chamber Matters & Case Files</h1>
           <p className="text-xs text-charcoal-500 mt-1">
-            Active litigations, pleadings, hearings & private precedent knowledge stores
+            Active litigations, order history, and dedicated drafting dossiers
           </p>
         </div>
 
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 rounded-lg bg-navy-900 hover:bg-navy-800 text-white text-xs font-semibold inline-flex items-center gap-2 shadow-sm transition-colors"
+          className="px-4 py-2 rounded-md bg-navy-900 hover:bg-navy-800 text-white text-xs font-medium inline-flex items-center gap-2 shadow-sm transition-colors"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>New Matter</span>
@@ -115,26 +114,26 @@ export const CasesList: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white rounded-xl border border-charcoal-200 p-4 shadow-card flex flex-wrap items-center justify-between gap-4">
-        <div className="flex-1 min-w-[260px] relative">
+      <div className="bg-white rounded-lg border border-charcoal-200/80 p-4 shadow-card flex flex-wrap items-center justify-between gap-3">
+        <div className="flex-1 min-w-[240px] relative">
           <input
             type="text"
-            placeholder="Search by title, client, opposing party, or CNR..."
+            placeholder="Search by matter title, client, or opposing party..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
+            className="w-full pl-9 pr-3 py-2 text-xs rounded-md border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
           />
           <Search className="w-4 h-4 text-charcoal-400 absolute left-3 top-2.5" />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex items-center gap-2">
           {/* Status Filter */}
-          <div className="flex items-center gap-1 bg-charcoal-100 p-1 rounded-lg text-xs font-medium">
+          <div className="flex items-center gap-1 bg-charcoal-100 p-1 rounded-md text-xs font-medium">
             {['ALL', 'ACTIVE', 'DISPOSED'].map((s) => (
               <button
                 key={s}
                 onClick={() => setStatusFilter(s)}
-                className={`px-3 py-1 rounded-md transition-all ${
+                className={`px-3 py-1 rounded transition-all ${
                   statusFilter === s ? 'bg-white text-navy-900 font-semibold shadow-sm' : 'text-charcoal-600'
                 }`}
               >
@@ -147,15 +146,14 @@ export const CasesList: React.FC = () => {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="px-3 py-1.5 rounded-lg border border-charcoal-300 text-xs text-charcoal-700 bg-white focus:outline-none focus:ring-1 focus:ring-navy-900"
+            className="px-3 py-1.5 rounded-md border border-charcoal-300 text-xs text-charcoal-700 bg-white focus:outline-none focus:ring-1 focus:ring-navy-900"
           >
-            <option value="ALL">All Jurisdictions</option>
+            <option value="ALL">All Types</option>
             <option value="CIVIL">Civil</option>
             <option value="CRIMINAL">Criminal</option>
             <option value="COMMERCIAL">Commercial</option>
             <option value="WRIT">Writ</option>
             <option value="ARBITRATION">Arbitration</option>
-            <option value="FAMILY">Family</option>
           </select>
         </div>
       </div>
@@ -164,32 +162,26 @@ export const CasesList: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {loading ? (
           <div className="col-span-full py-16 text-center text-charcoal-400">
-            <div className="w-8 h-8 border-2 border-gold-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-sm">Loading chamber matters...</p>
+            <div className="w-7 h-7 border-2 border-gold-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <p className="text-xs font-medium text-navy-900">Loading chamber files...</p>
           </div>
         ) : cases.length === 0 ? (
-          <div className="col-span-full py-16 text-center text-charcoal-400 bg-white rounded-xl border border-charcoal-200">
-            <Briefcase className="w-10 h-10 mx-auto mb-2 text-charcoal-300" />
+          <div className="col-span-full py-16 text-center text-charcoal-400 bg-white rounded-lg border border-charcoal-200">
+            <Briefcase className="w-8 h-8 mx-auto mb-2 text-charcoal-300" />
             <h4 className="text-sm font-semibold text-navy-900">No matching cases found</h4>
-            <p className="text-xs text-charcoal-500 mt-1">Try resetting your filters or create a new matter.</p>
+            <p className="text-xs text-charcoal-500 mt-1">Try adjusting your filters or open a new matter file.</p>
           </div>
         ) : (
           cases.map((c) => (
             <div
               key={c.id}
-              className="bg-white rounded-xl border border-charcoal-200 p-5 shadow-card hover:shadow-editor hover:border-gold-400 transition-all flex flex-col justify-between group"
+              className="bg-white rounded-lg border border-charcoal-200/80 p-5 shadow-card hover:border-gold-400 transition-all flex flex-col justify-between group"
             >
-              <div>
+              <div className="space-y-2.5">
                 {/* Header row */}
-                <div className="flex items-start justify-between gap-2 mb-2">
+                <div className="flex items-center justify-between">
                   <CaseTypeBadge type={c.case_type} />
-                  <span
-                    className={`px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider ${
-                      c.status === 'ACTIVE'
-                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                        : 'bg-charcoal-100 text-charcoal-700'
-                    }`}
-                  >
+                  <span className="text-[11px] font-medium text-charcoal-500">
                     {c.status}
                   </span>
                 </div>
@@ -199,51 +191,38 @@ export const CasesList: React.FC = () => {
                   <Link to={`/cases/${c.id}`}>{c.case_title}</Link>
                 </h3>
 
-                <p className="text-xs text-charcoal-500 mt-1 font-medium truncate">{c.court_forum}</p>
-
-                {/* CNR & NDOH */}
-                <div className="flex flex-wrap items-center gap-2 mt-3 pt-2 border-t border-charcoal-100">
-                  <CNRBadge cnr={c.cnr_number} />
-                  {c.next_hearing_date && (
-                    <span className="font-mono text-xs font-semibold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 inline-flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-amber-600" />
-                      <span>{new Date(c.next_hearing_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
-                    </span>
-                  )}
-                </div>
+                <p className="text-xs text-charcoal-500 font-medium truncate">{c.court_forum}</p>
 
                 {/* Parties Details */}
-                <div className="mt-3 text-xs space-y-1 bg-canvas p-2.5 rounded-lg border border-charcoal-100">
+                <div className="text-xs space-y-1 bg-canvas p-2.5 rounded-md border border-charcoal-100">
                   <div className="truncate">
-                    <span className="font-semibold text-charcoal-600">Client: </span>
-                    <span className="text-navy-900">{c.client_name}</span>
+                    <span className="text-charcoal-400">Client:</span>{' '}
+                    <span className="font-medium text-charcoal-800">{c.client_name}</span>
                   </div>
                   <div className="truncate">
-                    <span className="font-semibold text-charcoal-600">Opposing: </span>
-                    <span className="text-navy-900">{c.opposing_party}</span>
+                    <span className="text-charcoal-400">Opposing:</span>{' '}
+                    <span className="font-medium text-charcoal-800">{c.opposing_party}</span>
                   </div>
                 </div>
 
-                {/* Outcome snippet */}
-                {c.outcome_summary && (
-                  <p className="mt-3 text-xs italic text-charcoal-600 line-clamp-2">
-                    "{c.outcome_summary}"
-                  </p>
+                {/* Next Hearing indicator */}
+                {c.next_hearing_date && (
+                  <div className="flex items-center justify-between text-xs pt-1">
+                    <span className="text-charcoal-500">NDOH:</span>
+                    <span className="font-medium text-amber-900 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/60 inline-flex items-center gap-1">
+                      <Calendar className="w-3 h-3 text-amber-700" />
+                      <span>{new Date(c.next_hearing_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
+                    </span>
+                  </div>
                 )}
               </div>
 
               {/* Card Footer */}
               <div className="mt-5 pt-3 border-t border-charcoal-100 flex items-center justify-between">
-                <div className="flex items-center gap-3 text-xs text-charcoal-500">
-                  <span className="inline-flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>{c.hearings_count || 0} Hearings</span>
-                  </span>
+                <div className="flex items-center gap-2 text-xs text-charcoal-500">
+                  <span>{c.hearings_count || 0} Orders</span>
                   <span>•</span>
-                  <span className="inline-flex items-center gap-1">
-                    <FileText className="w-3.5 h-3.5" />
-                    <span>{c.documents_count || 0} Docs</span>
-                  </span>
+                  <span>{c.documents_count || 0} Docs</span>
                 </div>
 
                 <div className="flex items-center gap-1.5">
@@ -256,7 +235,7 @@ export const CasesList: React.FC = () => {
                   </button>
                   <Link
                     to={`/cases/${c.id}`}
-                    className="px-3 py-1.5 rounded bg-navy-900 hover:bg-navy-800 text-white text-xs font-semibold inline-flex items-center gap-1 transition-colors"
+                    className="px-3 py-1.5 rounded-md bg-navy-900 hover:bg-navy-800 text-white text-xs font-medium inline-flex items-center gap-1 transition-colors"
                   >
                     <span>Drafting</span>
                     <ArrowRight className="w-3 h-3" />
@@ -273,22 +252,22 @@ export const CasesList: React.FC = () => {
         <div className="fixed inset-0 z-50 overflow-y-auto bg-navy-950/40 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="w-full max-w-lg bg-white rounded-xl shadow-xl border border-charcoal-200 p-6">
             <h3 className="font-serif font-bold text-navy-900 text-lg mb-1">
-              Create New Legal Matter
+              Create New Matter File
             </h3>
             <p className="text-xs text-charcoal-500 mb-4">
-              Enter case details to initiate the Matter Workspace and ground drafting in historical chamber files.
+              Enter case details to open a dedicated dossier and drafting workspace.
             </p>
 
             <form onSubmit={handleCreateCase} className="space-y-3.5 text-xs">
               <div>
-                <label className="block font-medium text-charcoal-700 mb-1">Case Title</label>
+                <label className="block font-medium text-charcoal-700 mb-1">Matter Title</label>
                 <input
                   type="text"
                   placeholder="e.g. Verma v. State of NCT of Delhi & Anr."
                   value={caseTitle}
                   onChange={(e) => setCaseTitle(e.target.value)}
                   required
-                  className="w-full px-3 py-2 rounded-lg border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
+                  className="w-full px-3 py-2 rounded-md border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
                 />
               </div>
 
@@ -301,7 +280,7 @@ export const CasesList: React.FC = () => {
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
                     required
-                    className="w-full px-3 py-2 rounded-lg border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
+                    className="w-full px-3 py-2 rounded-md border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
                   />
                 </div>
                 <div>
@@ -312,7 +291,7 @@ export const CasesList: React.FC = () => {
                     value={opposingParty}
                     onChange={(e) => setOpposingParty(e.target.value)}
                     required
-                    className="w-full px-3 py-2 rounded-lg border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
+                    className="w-full px-3 py-2 rounded-md border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
                   />
                 </div>
               </div>
@@ -326,15 +305,15 @@ export const CasesList: React.FC = () => {
                     value={courtForum}
                     onChange={(e) => setCourtForum(e.target.value)}
                     required
-                    className="w-full px-3 py-2 rounded-lg border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
+                    className="w-full px-3 py-2 rounded-md border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
                   />
                 </div>
                 <div>
-                  <label className="block font-medium text-charcoal-700 mb-1">Matter Type</label>
+                  <label className="block font-medium text-charcoal-700 mb-1">Jurisdiction Type</label>
                   <select
                     value={caseType}
                     onChange={(e) => setCaseType(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-lg border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900 bg-white"
+                    className="w-full px-3 py-2 rounded-md border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900 bg-white"
                   >
                     <option value="CIVIL">CIVIL</option>
                     <option value="CRIMINAL">CRIMINAL</option>
@@ -356,7 +335,7 @@ export const CasesList: React.FC = () => {
                     placeholder="e.g. DLHC010045212025"
                     value={cnrNumber}
                     onChange={(e) => setCnrNumber(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900 font-mono"
+                    className="w-full px-3 py-2 rounded-md border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900 font-mono"
                   />
                 </div>
                 <div>
@@ -367,7 +346,7 @@ export const CasesList: React.FC = () => {
                     type="date"
                     value={nextHearingDate}
                     onChange={(e) => setNextHearingDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
+                    className="w-full px-3 py-2 rounded-md border border-charcoal-300 focus:outline-none focus:ring-1 focus:ring-navy-900"
                   />
                 </div>
               </div>
@@ -376,13 +355,13 @@ export const CasesList: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 rounded-lg border border-charcoal-300 text-charcoal-600 hover:bg-charcoal-50 font-medium"
+                  className="px-4 py-2 rounded-md border border-charcoal-300 text-charcoal-600 hover:bg-charcoal-50 font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-lg bg-navy-900 text-white font-medium hover:bg-navy-800"
+                  className="px-5 py-2 rounded-md bg-navy-900 text-white font-medium hover:bg-navy-800"
                 >
                   Create Matter
                 </button>

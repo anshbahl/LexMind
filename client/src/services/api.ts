@@ -286,3 +286,4 @@ export async function streamLegalDraft(
 
   callbacks.onDone?.();
 }
+

@@ -36,3 +36,4 @@ export const CNRBadge: React.FC<CNRBadgeProps> = ({ cnr, className = '' }) => {
     </div>
   );
 };
+

@@ -224,3 +224,4 @@ router.delete('/:id', async (req: AuthenticatedRequest, res: Response): Promise<
 });
 
 export default router;
+

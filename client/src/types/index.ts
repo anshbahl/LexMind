@@ -136,3 +136,4 @@ export interface ChamberBrief {
   recommended_agenda_for_ndoh: string[];
   key_precedent_citations: string[];
 }
+

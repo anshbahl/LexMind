@@ -338,3 +338,4 @@ In the premises aforesaid, it is most respectfully prayed that ${honorific} may 
 }
 
 export const geminiService = new GeminiService();
+

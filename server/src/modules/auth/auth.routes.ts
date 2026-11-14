@@ -169,3 +169,4 @@ router.put('/profile', authMiddleware, async (req: AuthenticatedRequest, res: Re
 });
 
 export default router;
+

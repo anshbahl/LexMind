@@ -27,3 +27,4 @@ export const query = async (text: string, params?: any[]) => {
   }
   return res;
 };
+

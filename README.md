@@ -122,3 +122,4 @@ npm run dev:client
 ```
 Open **`http://localhost:3000`** in your browser.
 Click **"Use Seeded Advocate Account (Vikramaditya Sen)"** on the login screen to enter the workspace immediately.
+

@@ -26,3 +26,4 @@ export const CaseTypeBadge: React.FC<CaseTypeBadgeProps> = ({ type, className = 
     </span>
   );
 };
+
